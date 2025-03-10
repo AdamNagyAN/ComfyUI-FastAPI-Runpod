@@ -1,3 +1,5 @@
 fastapi
 pydantic
 websocket-client
+uvicorn
+runpod

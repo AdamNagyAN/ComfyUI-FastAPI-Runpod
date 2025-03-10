@@ -1,0 +1,260 @@
+{
+    "input": {
+        "workflow_json": {
+            "1": {
+              "inputs": {
+                "ckpt_name": "juggernaut_xl.safetensors"
+              },
+              "class_type": "CheckpointLoaderSimple"
+            },
+            "2": {
+              "inputs": {
+                "seed": "{{seed}}",
+                "steps": 4,
+                "cfg": 2,
+                "sampler_name": "dpmpp_sde",
+                "scheduler": "karras",
+                "denoise": 1,
+                "model": [
+                  "122",
+                  0
+                ],
+                "positive": [
+                  "3",
+                  0
+                ],
+                "negative": [
+                  "4",
+                  0
+                ],
+                "latent_image": [
+                  "22",
+                  0
+                ]
+              },
+              "class_type": "KSampler"
+            },
+            "3": {
+              "inputs": {
+                "text": "{{positive_prompt}}",
+                "clip": [
+                  "1",
+                  1
+                ]
+              },
+              "class_type": "CLIPTextEncode"
+            },
+            "4": {
+              "inputs": {
+                "text": "Naked, Nude, Vagina, Penis (big, Long), Pussy, Breasts (Small, Medium, Large), Testicles, fake eyes, deformed eyes, bad eyes, cgi, 3D, digital, airbrushed",
+                "clip": [
+                  "1",
+                  1
+                ]
+              },
+              "class_type": "CLIPTextEncode"
+            },
+            "6": {
+              "inputs": {
+                "samples": [
+                  "2",
+                  0
+                ],
+                "vae": [
+                  "1",
+                  2
+                ]
+              },
+              "class_type": "VAEDecode"
+            },
+            "8": {
+              "inputs": {
+                "sampling": "lcm",
+                "zsnr": false,
+                "model": [
+                  "1",
+                  0
+                ]
+              },
+              "class_type": "ModelSamplingDiscrete"
+            },
+            "22": {
+              "inputs": {
+                "width": 832,
+                "height": 1216,
+                "batch_size": 4
+              },
+              "class_type": "EmptyLatentImage"
+            },
+            "122": {
+              "inputs": {
+                "weight": "{{profileWeight}}",
+                "weight_type": "linear",
+                "combine_embeds": "concat",
+                "start_at": 0,
+                "end_at": 1,
+                "embeds_scaling": "V only",
+                "model": [
+                  "8",
+                  0
+                ],
+                "ipadapter": [
+                  "123",
+                  0
+                ],
+                "image": [
+                  "141",
+                  0
+                ],
+                "clip_vision": [
+                  "125",
+                  0
+                ]
+              },
+              "class_type": "IPAdapterAdvanced"
+            },
+            "123": {
+              "inputs": {
+                "ipadapter_file": "ip-adapter-plus-face_sdxl.safetensors"
+              },
+              "class_type": "IPAdapterModelLoader"
+            },
+            "125": {
+              "inputs": {
+                "clip_name": "CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors"
+              },
+              "class_type": "CLIPVisionLoader"
+            },
+            "126": {
+              "inputs": {
+                "images": [
+                  "6",
+                  0
+                ]
+              },
+              "class_type": "PreviewImage"
+            },
+            "127": {
+              "inputs": {
+                "seed": 364205375165136,
+                "steps": 5,
+                "cfg": 2,
+                "sampler_name": "dpmpp_sde",
+                "scheduler": "karras",
+                "denoise": 0.65,
+                "model": [
+                  "122",
+                  0
+                ],
+                "positive": [
+                  "3",
+                  0
+                ],
+                "negative": [
+                  "4",
+                  0
+                ],
+                "latent_image": [
+                  "2",
+                  0
+                ]
+              },
+              "class_type": "KSampler"
+            },
+            "128": {
+              "inputs": {
+                "samples": [
+                  "127",
+                  0
+                ],
+                "vae": [
+                  "1",
+                  2
+                ]
+              },
+              "class_type": "VAEDecode"
+            },
+            "129": {
+              "inputs": {
+                "images": [
+                  "128",
+                  0
+                ]
+              },
+              "class_type": "PreviewImage"
+            },
+            "130": {
+              "inputs": {
+                "enabled": true,
+                "swap_model": "inswapper_128.onnx",
+                "facedetection": "retinaface_resnet50",
+                "face_restore_model": "GFPGANv1.4.pth",
+                "face_restore_visibility": 1,
+                "codeformer_weight": 0.5,
+                "detect_gender_input": "no",
+                "detect_gender_source": "no",
+                "input_faces_index": "0",
+                "source_faces_index": "0",
+                "console_log_level": 1,
+                "input_image": [
+                  "128",
+                  0
+                ],
+                "source_image": [
+                  "141",
+                  0
+                ]
+              },
+              "class_type": "ReActorFaceSwap"
+            },
+            "131": {
+              "inputs": {
+                "images": [
+                  "130",
+                  0
+                ]
+              },
+              "class_type": "PreviewImage"
+            },
+            "138": {
+              "inputs": {
+                "image": "pexels-soldiervip-1468379.png",
+                "upload": "image"
+              },
+              "class_type": "LoadImage"
+            },
+            "141": {
+              "inputs": {
+                "width": 832,
+                "height": 1216,
+                "upscale_method": "lanczos",
+                "keep_proportion": true,
+                "divisible_by": 2,
+                "crop": "center",
+                "image": [
+                  "167",
+                  0
+                ]
+              },
+              "class_type": "ImageResizeKJ"
+            },
+            "167": {
+              "inputs": {
+                "image": "{{image}}"
+              },
+              "class_type": "ETN_LoadImageBase64"
+            },
+            "168": {
+              "inputs": {
+                "filename_prefix": "imagegen",
+                "file_type": "WEBP (lossy)",
+                "images": [
+                  "130",
+                  0
+                ]
+              },
+              "class_type": "SaveImageExtended"
+            }
+          }
+    }
+}

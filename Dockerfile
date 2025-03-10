@@ -14,3 +14,7 @@ RUN pip install -r ./requirements.txt
 
 # Copy code at last
 COPY ./src ./src
+
+RUN ls -la && pwd
+
+CMD ["bash", "-c", "python ComfyUI/main.py & uvicorn src.main:app --host 0.0.0.0 --port 5000 --reload"]
