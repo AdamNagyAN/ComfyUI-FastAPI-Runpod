@@ -3,3 +3,4 @@ pydantic
 websocket-client
 uvicorn
 runpod
+onnxruntime
