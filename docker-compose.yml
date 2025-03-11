@@ -1,15 +1,15 @@
 services:
   comfyui-rest-api:
-    command: bash -c "python ComfyUI/main.py --cpu & python src/rp_handler.py"
+    command: bash -c "python ComfyUI/main.py & python src/rp_handler.py"
     container_name: comfyui-rest-api
     image: comfyui-rest-api
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: [gpu]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
     build:
       context: .
       dockerfile: Dockerfile

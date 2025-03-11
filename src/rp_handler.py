@@ -1,6 +1,7 @@
 import runpod
 from main import prompt
 import requests
+        
 
 def handler(event):
     input = event['input']
@@ -9,6 +10,8 @@ def handler(event):
 
     # Placeholder for a task; replace with image or text generation logic as needed
     result = prompt(workflow)
+    result = result.json()
+    print(result)
 
     # Send result to webhook
     if webhook_url:

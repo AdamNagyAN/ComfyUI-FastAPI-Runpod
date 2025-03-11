@@ -6,8 +6,6 @@ import urllib.parse
 import uuid
 import websocket
 
-from fastapi import FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from typing import Dict
@@ -49,18 +47,16 @@ api_version = '0.0.1'
 comfyui_server = '127.0.0.1:8188'
 client_id = str(uuid.uuid4())
 log.info('Start %s API, version %s', api_title, api_version)
-app = FastAPI(title=api_title, version=api_version)
-app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_credentials=True, allow_methods=['*'], allow_headers=['*'])
 
 # Endpoints
-@app.post('/prompt', response_model=Response, description='Execute a ComfyUI workflow.')
-def prompt(payload: Payload):
+def prompt(payload):
     # Create websocket connection to connect to the ComfyUI server
     ws = websocket.WebSocket()
     ws.connect("ws://{}/ws?clientId={}".format(comfyui_server, client_id))
 
     # Send workflow to ComfyUI API
-    prompt = payload.prompt
+    prompt = payload
+    print(prompt)
     prompt_id = queue_prompt(comfyui_server, client_id, prompt)['prompt_id']
 
     # Listen to the websocket connection to retrieve image data

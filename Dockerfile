@@ -10,6 +10,10 @@ RUN pip install -r ./ComfyUI/requirements.txt
 RUN git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus.git ComfyUI/custom_nodes/ComfyUI_IPAdapter_plus
 RUN git clone https://github.com/Gourieff/ComfyUI-ReActor.git ComfyUI/custom_nodes/ComfyUI-ReActor
 RUN pip install -r ./ComfyUI/custom_nodes/ComfyUI-ReActor/requirements.txt
+RUN git clone https://github.com/kijai/ComfyUI-KJNodes.git ComfyUI/custom_nodes/ComfyUI-KJNodes
+RUN pip install -r ./ComfyUI/custom_nodes/ComfyUI-KJNodes/requirements.txt
+RUN git clone https://github.com/Acly/comfyui-tooling-nodes.git ComfyUI/custom_nodes/comfyui-tooling-nodes
+RUN pip install -r ./ComfyUI/custom_nodes/comfyui-tooling-nodes/requirements.txt
 
 # Install API dependencies
 COPY ./requirements.txt .
@@ -22,4 +26,4 @@ COPY ./test_input.json ./
 
 RUN ls -la && pwd
 
-CMD ["bash", "-c", "python ComfyUI/main.py --cpu & uvicorn src.main:app --host 0.0.0.0 --port 5000 --reload"]
+CMD ["bash", "-c", "python ComfyUI/main.py & python src/rp_handler.py"]
